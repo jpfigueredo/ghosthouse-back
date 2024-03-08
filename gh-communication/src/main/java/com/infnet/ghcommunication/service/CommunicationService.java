@@ -1,8 +1,9 @@
 package com.infnet.ghcommunication.service;
 
-import org.springframework.stereotype.Service;
+import com.infnet.ghcommunication.dto.CommunicationDTO;
 
-@Service
-public class CommunicationService {
-
+public interface CommunicationService {
+    public CommunicationDTO sendMessage(CommunicationDTO communicationDTO);
+    public CommunicationDTO getMessageById(Long communicationDTO);
+    public void deleteMessage(Long communicationDTO);
 }

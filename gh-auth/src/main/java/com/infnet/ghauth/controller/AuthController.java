@@ -2,8 +2,8 @@ package com.infnet.ghauth.controller;
 
 import com.infnet.ghauth.domain.Locatario;
 import com.infnet.ghauth.domain.Proprietario;
-import com.infnet.ghauth.dto.LoginDto;
-import com.infnet.ghauth.dto.UsuarioRecordDto;
+import com.infnet.ghauth.dto.LoginDTO;
+import com.infnet.ghauth.dto.UsuarioRecordDTO;
 import com.infnet.ghauth.service.LocatarioService;
 import com.infnet.ghauth.service.ProprietarioService;
 import com.infnet.ghauth.service.UsuarioService;
@@ -31,12 +31,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDto> login(@RequestBody @Valid LoginDto loginDto) {
+    public ResponseEntity<LoginDTO> login(@RequestBody @Valid LoginDTO loginDto) {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.autenticar(loginDto));
     }
 
     @PostMapping("/proprietario")
-    public ResponseEntity<Proprietario> createProprietario(@RequestBody @Valid UsuarioRecordDto usuarioRecordDto) {
+    public ResponseEntity<Proprietario> createProprietario(@RequestBody @Valid UsuarioRecordDTO usuarioRecordDto) {
         Proprietario proprietario = new Proprietario();
         BeanUtils.copyProperties(usuarioRecordDto, proprietario);
 
@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/locatario")
-    public ResponseEntity<Locatario> createLocatario(@RequestBody @Valid UsuarioRecordDto usuarioRecordDto) {
+    public ResponseEntity<Locatario> createLocatario(@RequestBody @Valid UsuarioRecordDTO usuarioRecordDto) {
         Locatario locatario = new Locatario();
         BeanUtils.copyProperties(usuarioRecordDto, locatario);
 

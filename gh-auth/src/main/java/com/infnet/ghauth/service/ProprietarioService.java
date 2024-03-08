@@ -1,7 +1,7 @@
 package com.infnet.ghauth.service;
 
-import com.infnet.ghosthouseautenticacao.domain.Proprietario;
-import com.infnet.ghosthouseautenticacao.repository.ProprietarioRepository;
+import com.infnet.ghauth.domain.Proprietario;
+import com.infnet.ghauth.repository.ProprietarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

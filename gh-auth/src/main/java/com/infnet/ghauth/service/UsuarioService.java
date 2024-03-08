@@ -1,7 +1,7 @@
 package com.infnet.ghauth.service;
 
-import com.infnet.ghosthouseautenticacao.domain.Usuario;
-import com.infnet.ghosthouseautenticacao.dto.LoginDto;
+import com.infnet.ghauth.domain.Usuario;
+import com.infnet.ghauth.dto.LoginDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class UsuarioService {
         this.locatarioService = locatarioService;
     }
 
-    public LoginDto autenticar(LoginDto login) {
+    public LoginDTO autenticar(LoginDTO login) {
         Usuario user = proprietarioService.findProprietarioByEmail(login.email());
         if (user==null) {
             user = locatarioService.findLocatarioByEmail(login.email());
