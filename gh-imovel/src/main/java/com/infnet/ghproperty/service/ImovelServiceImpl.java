@@ -20,8 +20,8 @@ public class ImovelServiceImpl implements ImovelService {
     private ImovelRepository imovelRepository;
 
     @Override
-    public ImovelDTO createProperty(ImovelDTO imovelDto) throws Exception {
-        Imovel imovel = modelMapper.map(imovelDto, Imovel.class);
+    public ImovelDTO createProperty(ImovelDTO imovelDTO) throws Exception {
+        Imovel imovel = modelMapper.map(imovelDTO, Imovel.class);
         Imovel savedImovel = imovelRepository.save(imovel);
         return modelMapper.map(savedImovel, ImovelDTO.class);
     }

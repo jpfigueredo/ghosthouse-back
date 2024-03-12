@@ -1,23 +1,56 @@
 package com.infnet.ghcommunication.service;
 
+import com.infnet.ghcommunication.domain.Communication;
+import com.infnet.ghcommunication.repository.CommunicationRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.infnet.ghcommunication.dto.CommunicationDTO;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
-public class CommunicationServiceImpl {
+public class CommunicationServiceImpl implements CommunicationService{
 
+    @Autowired
+    CommunicationRepository communicationRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
     public CommunicationDTO sendMessage(CommunicationDTO communicationDTO) {
-        // Implementar lógica para enviar uma mensagem
-        // Converter MessageDto para entidade de domínio, salvar no banco de dados e retornar o MessageDto resultante
-        return null;
+        Communication communication = modelMapper.map(communicationDTO, Communication.class);
+        Communication savedReview = communicationRepository.save(communication);
+        return modelMapper.map(savedReview, CommunicationDTO.class);
     }
 
-    public CommunicationDTO getMessageById(Long communicationDTO) {
-        // Implementar lógica para buscar uma mensagem pelo ID e retornar o MessageDto correspondente
-        return null;
+    @Override
+    public CommunicationDTO getMessageById(Long communicationID) throws Exception {
+        Communication review = communicationExistsByID(communicationID);
+        return modelMapper.map(review, CommunicationDTO.class);
     }
 
-    public void deleteMessage(Long communicationDTO) {
-        // Implementar lógica para excluir uma mensagem pelo ID
+    @Override
+    public void deleteMessage(Long communicationID) throws Exception {
+        Communication communication = communicationExistsByID(communicationID);
+        communicationRepository.delete(communication);
+    }
+
+    @Override
+    public List<CommunicationDTO> getMessageList() {
+        List<Communication> imovelList = communicationRepository.findAll();
+        return imovelList.stream()
+                .map(review -> modelMapper.map(review, CommunicationDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    private Communication communicationExistsByID(Long communicationID) throws Exception {
+        if (!communicationRepository.existsById(communicationID)) {
+            throw new Exception("Mensagem não encontrado com o ID: " + communicationID);
+        }
+        return communicationRepository.findById(communicationID).get();
     }
 }

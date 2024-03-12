@@ -38,7 +38,7 @@ class ImovelServiceImplTest {
     private ImovelBuilder imovelBuilder;
 
     @InjectMocks
-    private ImovelServiceImpl imovelService;
+    private ImovelService imovelService;
 
     @BeforeEach
     void setUp() {
@@ -133,7 +133,7 @@ class ImovelServiceImplTest {
 
     @Test
     @Order(8)
-    void getImovelList() {
+    void getImovelList() throws Exception {
         List<Imovel> imovelList = imovelBuilder.createImovelList();
         List<ImovelDTO> imovelDTOList = imovelBuilder.createImovelDTOList();
 
@@ -142,7 +142,7 @@ class ImovelServiceImplTest {
         List<ImovelDTO> foundImovelDTOList = imovelService.getPropertyList();
         assertEquals(imovelDTOList.size(), foundImovelDTOList.size());
         for (int i = 0; i < imovelList.size(); i++) {
-            assertEquals(imovelDTOList.get(i).getIdProprietario(), imovelList.get(i).getIdProprietario().getId());
+            assertEquals(imovelDTOList.get(i).getIdProprietario(), imovelList.get(i).getProprietario().getId());
         }
     }
 }

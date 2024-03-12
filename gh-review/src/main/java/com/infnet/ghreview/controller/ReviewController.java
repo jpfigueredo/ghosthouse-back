@@ -1,7 +1,7 @@
 package com.infnet.ghreview.controller;
 
 import com.infnet.ghreview.dto.ReviewDTO;
-import com.infnet.ghreview.service.ReviewService;
+import com.infnet.ghreview.service.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     @Autowired
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewService;
 
     @PostMapping
-    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDto) {
-        ReviewDTO newReview = reviewService.createReview(reviewDto);
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO) {
+        ReviewDTO newReview = reviewService.createReview(reviewDTO);
         return new ResponseEntity<>(newReview, HttpStatus.CREATED);
     }
 
@@ -27,8 +27,8 @@ public class ReviewController {
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<ReviewDTO> updateReview(@PathVariable Long reviewId, @RequestBody ReviewDTO reviewDto) {
-        ReviewDTO updatedReview = reviewService.updateReview(reviewId, reviewDto);
+    public ResponseEntity<ReviewDTO> updateReview(@PathVariable Long reviewId, @RequestBody ReviewDTO reviewDTO) {
+        ReviewDTO updatedReview = reviewService.updateReview(reviewId, reviewDTO);
         return new ResponseEntity<>(updatedReview, HttpStatus.OK);
     }
 

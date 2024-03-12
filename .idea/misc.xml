@@ -6,17 +6,13 @@
       <list>
         <option value="$PROJECT_DIR$/gh-auth/pom.xml" />
         <option value="$PROJECT_DIR$/gh-communication/pom.xml" />
-        <option value="$PROJECT_DIR$/gh-reservation/pom.xml" />
-        <option value="$PROJECT_DIR$/gh-payment/pom.xml" />
-        <option value="$PROJECT_DIR$/gh-property/pom.xml" />
-        <option value="$PROJECT_DIR$/gh-property-search/pom.xml" />
-        <option value="$PROJECT_DIR$/gh-review/pom.xml" />
-        <option value="$PROJECT_DIR$/ghosthouse-autenticacao/pom.xml" />
         <option value="$PROJECT_DIR$/gh-imovel/pom.xml" />
+        <option value="$PROJECT_DIR$/gh-payment/pom.xml" />
+        <option value="$PROJECT_DIR$/gh-property-search/pom.xml" />
+        <option value="$PROJECT_DIR$/gh-reservation/pom.xml" />
+        <option value="$PROJECT_DIR$/gh-review/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="19" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="19" project-jdk-type="JavaSDK" />
 </project>

@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class CommunicationDTO {
-    private Integer senderId;
-    private Integer receiverId;
+    private Long id;
+    private Long senderId;
+    private Long receiverId;
     private String description;
 }

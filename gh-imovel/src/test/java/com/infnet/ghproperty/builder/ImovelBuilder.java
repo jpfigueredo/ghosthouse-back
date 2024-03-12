@@ -60,7 +60,7 @@ public class ImovelBuilder {
         imovel.setNome("teste");
         imovel.setDescricao("testestestestestestestesteste");
         imovel.setCategoria(TipoCategoria.CASA);
-        imovel.setIdProprietario(createProprietario());
+        imovel.setProprietario(createProprietario());
         imovel.setDatasReservadas(createDateList());
         imovel.setQuantidadeQuartos(1);
         imovel.setArea(1);
@@ -75,7 +75,7 @@ public class ImovelBuilder {
             imovel.setNome("teste");
             imovel.setDescricao("testestestestestestestesteste");
             imovel.setCategoria(TipoCategoria.CASA);
-            imovel.setIdProprietario(createProprietario());
+            imovel.setProprietario(createProprietario());
             imovel.setDatasReservadas(createDateList());
             imovel.setQuantidadeQuartos(1);
             imovel.setArea(1);
@@ -90,7 +90,7 @@ public class ImovelBuilder {
         imovel.setNome("teste");
         imovel.setDescricao("testestestestestestestesteste");
         imovel.setCategoria(TipoCategoria.CASA);
-        imovel.setIdProprietario(createProprietario());
+        imovel.setProprietario(createProprietario());
         imovel.setDatasReservadas(createDateList());
         imovel.setQuantidadeQuartos(1);
         imovel.setArea(1);

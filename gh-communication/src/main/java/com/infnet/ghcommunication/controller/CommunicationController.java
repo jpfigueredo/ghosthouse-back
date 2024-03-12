@@ -21,13 +21,13 @@ public class CommunicationController {
     }
 
     @GetMapping("/{messageId}")
-    public ResponseEntity<CommunicationDTO> getMessageById(@PathVariable Long messageId) {
+    public ResponseEntity<CommunicationDTO> getMessageById(@PathVariable Long messageId) throws Exception {
         CommunicationDTO messageDto = communicationService.getMessageById(messageId);
         return new ResponseEntity<>(messageDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{messageId}")
-    public ResponseEntity<Void> deleteMessage(@PathVariable Long messageId) {
+    public ResponseEntity<Void> deleteMessage(@PathVariable Long messageId) throws Exception {
         communicationService.deleteMessage(messageId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

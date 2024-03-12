@@ -29,7 +29,7 @@ public class Imovel {
 
     @OneToOne
     @JoinColumn(name = "proprietario_id")
-    private Proprietario idProprietario;
+    private Proprietario proprietario;
 
     private TipoCategoria categoria;
 }

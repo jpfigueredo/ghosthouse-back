@@ -2,8 +2,12 @@ package com.infnet.ghcommunication.service;
 
 import com.infnet.ghcommunication.dto.CommunicationDTO;
 
+import java.util.List;
+
 public interface CommunicationService {
-    public CommunicationDTO sendMessage(CommunicationDTO communicationDTO);
-    public CommunicationDTO getMessageById(Long communicationDTO);
-    public void deleteMessage(Long communicationDTO);
+    CommunicationDTO sendMessage(CommunicationDTO communicationDTO) throws Exception;
+    CommunicationDTO getMessageById(Long communicationDTO) throws Exception;
+    void deleteMessage(Long communicationDTO) throws Exception;
+    List<CommunicationDTO> getMessageList() throws Exception;
+
 }
