@@ -25,7 +25,7 @@ public class ReservaControllerTest {
     private MockMvc mockMvc;
 
     @InjectMocks
-    private ReservationController reservationController;
+    private ReservaController reservaController;
 
     @Before
     public void setUp() {

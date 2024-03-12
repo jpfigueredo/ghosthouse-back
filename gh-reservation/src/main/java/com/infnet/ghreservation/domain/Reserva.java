@@ -13,7 +13,7 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="property_id")
-    private String id;
+    private Long id;
     private String propertyId;
     private String tenantId;
     private Date startDate;

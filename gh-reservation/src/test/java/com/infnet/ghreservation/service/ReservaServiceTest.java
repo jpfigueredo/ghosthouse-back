@@ -5,8 +5,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import com.infnet.ghreservation.dto.ReservationDTO;
-import com.infnet.ghreservation.repository.ReservationRepository;
+import com.infnet.ghreservation.dto.ReservaDTO;
+import com.infnet.ghreservation.repository.ReservaRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,10 +16,10 @@ import org.mockito.MockitoAnnotations;
 public class ReservaServiceTest {
 
     @Mock
-    private ReservationRepository reservationRepository;
+    private ReservaRepository reservaRepository;
 
     @InjectMocks
-    private ReservationService reservationService;
+    private ReservaServiceImpl reservationService;
 
     @Before
     public void setUp() {
@@ -29,13 +29,13 @@ public class ReservaServiceTest {
     @Test
     public void testFindReservationById() {
         long reservationId = 1L;
-        ReservationDTO mockReservation = new ReservationDTO();
+        ReservaDTO mockReservation = new ReservaDTO();
         mockReservation.setId(reservationId);
         mockReservation.setGuestName("John Doe");
 
-        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(mockReservation));
+        when(reservaRepository.findById(reservationId)).thenReturn(Optional.of(mockReservation));
 
-        Optional<ReservationDTO> result = reservationService.findReservationById(reservationId);
+        Optional<ReservaDTO> result = reservationService.findReservationById(reservationId);
 
         assertEquals(mockReservation, result.orElse(null));
     }
