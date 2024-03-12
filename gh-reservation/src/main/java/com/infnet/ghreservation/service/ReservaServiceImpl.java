@@ -20,14 +20,14 @@ public class ReservaServiceImpl implements ReservaService {
     private ReservaRepository reservaRepository;
 
     @Override
-    public ReservaDTO createReservation(ReservaDTO reservaDTO) {
+    public ReservaDTO createReserva(ReservaDTO reservaDTO) {
         Reserva reserva = modelMapper.map(reservaDTO, Reserva.class);
         Reserva savedReserva = reservaRepository.save(reserva);
         return modelMapper.map(savedReserva, ReservaDTO.class);
     }
 
     @Override
-    public List<ReservaDTO> getReservationList() {
+    public List<ReservaDTO> getReservaList() {
         List<Reserva> reservaList = reservaRepository.findAll();
         return reservaList.stream()
                 .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
@@ -35,22 +35,22 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaDTO getReservationById(Long reservationId) throws Exception {
-        Reserva review = existsReservaByID(reservationId);
+    public ReservaDTO getReservaById(Long reservaId) throws Exception {
+        Reserva review = existsReservaByID(reservaId);
         return modelMapper.map(review, ReservaDTO.class);
     }
 
     @Override
-    public ReservaDTO updateReservation(Long reservationId, ReservaDTO reservaDTO) throws Exception {
-        Reserva reserva = existsReservaByID(reservationId);
-        reserva.setId(reservationId);
+    public ReservaDTO updateReserva(Long reservaId, ReservaDTO reservaDTO) throws Exception {
+        Reserva reserva = existsReservaByID(reservaId);
+        reserva.setId(reservaId);
         Reserva updatedReserva = reservaRepository.save(modelMapper.map(reserva, Reserva.class));
         return modelMapper.map(updatedReserva, ReservaDTO.class);
     }
 
     @Override
-    public void deleteReservation(Long reservationId) throws Exception {
-        Reserva reserva = existsReservaByID(reservationId);
+    public void deleteReserva(Long reservaId) throws Exception {
+        Reserva reserva = existsReservaByID(reservaId);
         reservaRepository.delete(reserva);
     }
 

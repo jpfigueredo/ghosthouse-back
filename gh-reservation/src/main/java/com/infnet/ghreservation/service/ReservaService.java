@@ -5,9 +5,9 @@ import com.infnet.ghreservation.dto.ReservaDTO;
 import java.util.List;
 
 public interface ReservaService {
-    ReservaDTO createReservation(ReservaDTO reservaDTO);
-    ReservaDTO getReservationById(Long reservationId) throws Exception;
-    ReservaDTO updateReservation(Long reservationId, ReservaDTO reservaDTO) throws Exception;
-    void deleteReservation(Long reservationId) throws Exception;
-    List<ReservaDTO> getReservationList();
+    ReservaDTO createReserva(ReservaDTO reservaDTO);
+    ReservaDTO getReservaById(Long reservaId) throws Exception;
+    ReservaDTO updateReserva(Long reservaId, ReservaDTO reservaDTO) throws Exception;
+    void deleteReserva(Long reservaId) throws Exception;
+    List<ReservaDTO> getReservaList();
 }

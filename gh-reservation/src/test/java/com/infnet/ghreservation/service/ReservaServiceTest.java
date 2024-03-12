@@ -35,7 +35,7 @@ public class ReservaServiceTest {
 
         when(reservaRepository.findById(reservationId)).thenReturn(Optional.of(mockReservation));
 
-        Optional<ReservaDTO> result = reservationService.findReservationById(reservationId);
+        Optional<ReservaDTO> result = reservationService.findReservaById(reservationId);
 
         assertEquals(mockReservation, result.orElse(null));
     }

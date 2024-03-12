@@ -15,31 +15,31 @@ public class ReservaController {
     private ReservaService reservaService;
 
     @PostMapping
-    public ResponseEntity<ReservaDTO> createReservation(@RequestBody ReservaDTO reservaDto) {
-        ReservaDTO newReservation = reservaService.createReservation(reservaDto);
+    public ResponseEntity<ReservaDTO> createReserva(@RequestBody ReservaDTO reservaDTO) {
+        ReservaDTO newReservation = reservaService.createReserva(reservaDTO);
         return new ResponseEntity<>(newReservation, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<ReservaDTO> getReservationList() {
-        return new ResponseEntity(reservaService.getReservationList(), HttpStatus.OK);
+    public ResponseEntity<ReservaDTO> getReservaList() {
+        return new ResponseEntity(reservaService.getReservaList(), HttpStatus.OK);
     }
 
-    @GetMapping("/{reservationId}")
-    public ResponseEntity<ReservaDTO> getReservationById(@PathVariable Long reservationId) {
-        ReservaDTO reservaDto = reservaService.getReservationById(reservationId);
+    @GetMapping("/{reservaId}")
+    public ResponseEntity<ReservaDTO> getReservaById(@PathVariable Long reservaId) throws Exception {
+        ReservaDTO reservaDto = reservaService.getReservaById(reservaId);
         return new ResponseEntity<>(reservaDto, HttpStatus.OK);
     }
 
-    @PutMapping("/{reservationId}")
-    public ResponseEntity<ReservaDTO> updateReservation(@PathVariable Long reservationId, @RequestBody ReservaDTO reservaDto) {
-        ReservaDTO updatedReservation = reservaService.updateReservation(reservationId, reservaDto);
+    @PutMapping("/{reservaId}")
+    public ResponseEntity<ReservaDTO> updateReserva(@PathVariable Long reservaId, @RequestBody ReservaDTO reservaDTO) throws Exception {
+        ReservaDTO updatedReservation = reservaService.updateReserva(reservaId, reservaDTO);
         return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
     }
 
     @DeleteMapping("/{reservationId}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId) {
-        reservaService.deleteReservation(reservationId);
+    public ResponseEntity<Void> deleteReserva(@PathVariable Long reservationId) throws Exception {
+        reservaService.deleteReserva(reservationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
