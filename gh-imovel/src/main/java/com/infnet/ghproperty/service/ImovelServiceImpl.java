@@ -20,21 +20,20 @@ public class ImovelServiceImpl implements ImovelService {
     private ImovelRepository imovelRepository;
 
     @Override
-    public ImovelDTO createProperty(ImovelDTO imovelDTO) throws Exception {
+    public ImovelDTO createProperty(ImovelDTO imovelDTO) {
         Imovel imovel = modelMapper.map(imovelDTO, Imovel.class);
         Imovel savedImovel = imovelRepository.save(imovel);
         return modelMapper.map(savedImovel, ImovelDTO.class);
     }
 
     @Override
-    public ImovelDTO getPropertyById(Long propertyId) throws ResourceNotFoundException {
-        Imovel imovel = imovelRepository.findById(propertyId)
-                .orElseThrow(() -> new ResourceNotFoundException("Imóvel não encontrado com o ID: " + propertyId));
-        return modelMapper.map(imovel, ImovelDTO.class);
+    public ImovelDTO getPropertyById(Long propertyId) throws Exception {
+        Imovel review = propertyExistsByID(propertyId);
+        return modelMapper.map(review, ImovelDTO.class);
     }
 
     @Override
-    public ImovelDTO updateProperty(Long propertyId, ImovelDTO imovelDTO) throws Exception {
+    public ImovelDTO updateProperty(Long propertyId, ImovelDTO imovelDTO) throws ResourceNotFoundException {
         if (!imovelRepository.existsById(propertyId)) {
             throw new ResourceNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
         }
@@ -44,11 +43,9 @@ public class ImovelServiceImpl implements ImovelService {
     }
 
     @Override
-    public void deleteProperty(Long propertyId) throws ResourceNotFoundException {
-        if (!imovelRepository.existsById(propertyId)) {
-            throw new ResourceNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
-        }
-        imovelRepository.deleteById(propertyId);
+    public void deleteProperty(Long propertyId) throws Exception {
+        Imovel imovel = propertyExistsByID(propertyId);
+        imovelRepository.delete(imovel);
     }
 
     @Override
@@ -57,5 +54,12 @@ public class ImovelServiceImpl implements ImovelService {
         return imovelList.stream()
                 .map(imovel -> modelMapper.map(imovel, ImovelDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    private Imovel propertyExistsByID(Long propertyId) throws Exception {
+        if (!imovelRepository.existsById(propertyId)) {
+            throw new ResourceNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
+        }
+        return imovelRepository.findById(propertyId).get();
     }
 }
