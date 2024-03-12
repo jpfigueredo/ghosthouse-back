@@ -1,8 +1,9 @@
 package com.infnet.ghauth.controller;
 
 import com.infnet.ghauth.dto.UserDTO;
-import com.infnet.ghauth.domain.User;
-import com.infnet.ghauth.service.UserService;
+import com.infnet.ghauth.exceptions.ResourceNotFoundException;
+import com.infnet.ghauth.service.UsuarioServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UsuarioServiceImpl userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDto) {
-        UserDTO newUser = userService.registerUser(userDto);
+    public ResponseEntity<UserDTO> registerUser(@RequestBody @Valid UserDTO userDto) {
+        UserDTO newUser = userService.saveUser(userDto);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 

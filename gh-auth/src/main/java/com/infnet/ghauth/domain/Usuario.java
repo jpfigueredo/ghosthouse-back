@@ -2,20 +2,14 @@ package com.infnet.ghauth.domain;
 
 
 import com.infnet.ghauth.enums.UserType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@MappedSuperclass
+@Data
+@Entity
+@Inheritance
+@Table(name = "tb_usuario")
+@DiscriminatorColumn(name = "userType", discriminatorType = DiscriminatorType.STRING)
 public class Usuario {
 
     @Id
@@ -25,6 +19,8 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
+    @Column(insertable=false, updatable=false)
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
 }
