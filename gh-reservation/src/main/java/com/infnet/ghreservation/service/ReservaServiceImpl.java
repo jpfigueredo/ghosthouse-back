@@ -35,8 +35,8 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaDTO getReservaById(Long reservaId) throws Exception {
-        Reserva review = existsReservaByID(reservaId);
+    public ReservaDTO getReservaById(Long reservationId) throws Exception {
+        Reserva review = existsReservaByID(reservationId);
         return modelMapper.map(review, ReservaDTO.class);
     }
 
