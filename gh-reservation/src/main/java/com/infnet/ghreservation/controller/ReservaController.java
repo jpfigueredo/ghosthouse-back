@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/api/reservas")
 public class ReservaController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class ReservaController {
         return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{reservationId}")
+    @DeleteMapping("/{reservaId}")
     public ResponseEntity<Void> deleteReserva(@PathVariable Long reservationId) {
         reservaService.deleteReserva(reservationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

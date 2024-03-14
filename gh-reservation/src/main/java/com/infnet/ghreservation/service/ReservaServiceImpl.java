@@ -16,6 +16,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Autowired
     private ReservaRepository reservaRepository;
+
     private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
@@ -34,8 +35,8 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaDTO getReservaById(Long reservationId) {
-        Reserva reserva = existsReservaByID(reservationId);
+    public ReservaDTO getReservaById(Long reservaId) {
+        Reserva reserva = existsReservaByID(reservaId);
         return modelMapper.map(reserva, ReservaDTO.class);
     }
 
@@ -53,11 +54,11 @@ public class ReservaServiceImpl implements ReservaService {
         reservaRepository.delete(reserva);
     }
 
-    private Reserva existsReservaByID(Long reservationId) {
-        if (!reservaRepository.existsById(reservationId)) {
-            throw new EntityNotFoundException("Reserva não encontrado com o ID: " + reservationId);
+    private Reserva existsReservaByID(Long reservaId) {
+        if (!reservaRepository.existsById(reservaId)) {
+            throw new EntityNotFoundException("Reserva não encontrado com o ID: " + reservaId);
         }
-        return reservaRepository.findById(reservationId).get();
+        return reservaRepository.findById(reservaId).get();
     }
 
 }

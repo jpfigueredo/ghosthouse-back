@@ -12,10 +12,16 @@ public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="reservation_id")
+    @Column(name ="reserva_id")
     private Long id;
+
+    @OneToOne
     private String propertyId;
+
+
     private String tenantId;
+
     private Date startDate;
+
     private Date endDate;
 }
