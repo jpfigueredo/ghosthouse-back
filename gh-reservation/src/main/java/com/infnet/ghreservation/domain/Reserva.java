@@ -12,7 +12,7 @@ public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="property_id")
+    @Column(name ="reservation_id")
     private Long id;
     private String propertyId;
     private String tenantId;

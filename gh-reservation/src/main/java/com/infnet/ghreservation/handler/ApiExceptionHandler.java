@@ -1,6 +1,5 @@
-package com.infnet.ghauth.handler;
+package com.infnet.ghreservation.handler;
 
-import com.infnet.ghauth.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -50,6 +49,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntidadeNaoEncontrada(EntityNotFoundException ex, WebRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
@@ -62,27 +62,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleRecursoNaoEncontrado(ResourceNotFoundException ex, WebRequest request) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-
-        ApiError apiError = new ApiError();
-        apiError.setStatus(status.value());
-        apiError.setDataHora(new Date());
-        apiError.setTitulo(ex.getMessage());
-
-        return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleNegocio(RuntimeException ex, WebRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-
-        ApiError apiError = new ApiError();
-        apiError.setStatus(status.value());
-        apiError.setDataHora(new Date());
-        apiError.setTitulo(ex.getMessage());
-
-        return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<Object> handleNegocio(RuntimeException ex, WebRequest request) {
+//        HttpStatus status = HttpStatus.BAD_REQUEST;
+//
+//        ApiError apiError = new ApiError();
+//        apiError.setStatus(status.value());
+//        apiError.setDataHora(new Date());
+//        apiError.setTitulo(ex.getMessage());
+//
+//        return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
+//    }
 }

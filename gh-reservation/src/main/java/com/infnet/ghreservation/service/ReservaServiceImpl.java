@@ -3,6 +3,7 @@ package com.infnet.ghreservation.service;
 import com.infnet.ghreservation.domain.Reserva;
 import com.infnet.ghreservation.dto.ReservaDTO;
 import com.infnet.ghreservation.repository.ReservaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,8 @@ import java.util.stream.Collectors;
 public class ReservaServiceImpl implements ReservaService {
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private ReservaRepository reservaRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public ReservaDTO createReserva(ReservaDTO reservaDTO) {
@@ -35,28 +34,28 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaDTO getReservaById(Long reservationId) throws Exception {
-        Reserva review = existsReservaByID(reservationId);
-        return modelMapper.map(review, ReservaDTO.class);
+    public ReservaDTO getReservaById(Long reservationId) {
+        Reserva reserva = existsReservaByID(reservationId);
+        return modelMapper.map(reserva, ReservaDTO.class);
     }
 
     @Override
-    public ReservaDTO updateReserva(Long reservaId, ReservaDTO reservaDTO) throws Exception {
+    public ReservaDTO updateReserva(Long reservaId, ReservaDTO reservaDTO) {
         Reserva reserva = existsReservaByID(reservaId);
-        reserva.setId(reservaId);
-        Reserva updatedReserva = reservaRepository.save(modelMapper.map(reserva, Reserva.class));
+        reservaDTO.setId(reservaId);
+        Reserva updatedReserva = reservaRepository.save(modelMapper.map(reservaDTO, Reserva.class));
         return modelMapper.map(updatedReserva, ReservaDTO.class);
     }
 
     @Override
-    public void deleteReserva(Long reservaId) throws Exception {
+    public void deleteReserva(Long reservaId) {
         Reserva reserva = existsReservaByID(reservaId);
         reservaRepository.delete(reserva);
     }
 
-    private Reserva existsReservaByID(Long reservationId) throws Exception {
+    private Reserva existsReservaByID(Long reservationId) {
         if (!reservaRepository.existsById(reservationId)) {
-            throw new Exception("Reserva não encontrado com o ID: " + reservationId);
+            throw new EntityNotFoundException("Reserva não encontrado com o ID: " + reservationId);
         }
         return reservaRepository.findById(reservationId).get();
     }

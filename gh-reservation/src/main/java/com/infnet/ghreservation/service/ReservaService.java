@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface ReservaService {
     ReservaDTO createReserva(ReservaDTO reservaDTO);
-    ReservaDTO getReservaById(Long reservaId) throws Exception;
-    ReservaDTO updateReserva(Long reservaId, ReservaDTO reservaDTO) throws Exception;
-    void deleteReserva(Long reservaId) throws Exception;
+    ReservaDTO getReservaById(Long reservaId);
+    ReservaDTO updateReserva(Long reservaId, ReservaDTO reservaDTO);
+    void deleteReserva(Long reservaId);
     List<ReservaDTO> getReservaList();
 }

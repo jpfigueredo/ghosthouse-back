@@ -2,6 +2,7 @@ package com.infnet.ghreservation.controller;
 
 import com.infnet.ghreservation.dto.ReservaDTO;
 import com.infnet.ghreservation.service.ReservaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class ReservaController {
     private ReservaService reservaService;
 
     @PostMapping
-    public ResponseEntity<ReservaDTO> createReserva(@RequestBody ReservaDTO reservaDTO) {
+    public ResponseEntity<ReservaDTO> createReserva(@RequestBody @Valid ReservaDTO reservaDTO) {
         ReservaDTO newReservation = reservaService.createReserva(reservaDTO);
         return new ResponseEntity<>(newReservation, HttpStatus.CREATED);
     }
@@ -26,19 +27,19 @@ public class ReservaController {
     }
 
     @GetMapping("/{reservaId}")
-    public ResponseEntity<ReservaDTO> getReservaById(@PathVariable Long reservaId) throws Exception {
+    public ResponseEntity<ReservaDTO> getReservaById(@PathVariable Long reservaId) {
         ReservaDTO reservaDto = reservaService.getReservaById(reservaId);
         return new ResponseEntity<>(reservaDto, HttpStatus.OK);
     }
 
     @PutMapping("/{reservaId}")
-    public ResponseEntity<ReservaDTO> updateReserva(@PathVariable Long reservaId, @RequestBody ReservaDTO reservaDTO) throws Exception {
+    public ResponseEntity<ReservaDTO> updateReserva(@PathVariable Long reservaId, @RequestBody ReservaDTO reservaDTO) {
         ReservaDTO updatedReservation = reservaService.updateReserva(reservaId, reservaDTO);
         return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
     }
 
     @DeleteMapping("/{reservationId}")
-    public ResponseEntity<Void> deleteReserva(@PathVariable Long reservationId) throws Exception {
+    public ResponseEntity<Void> deleteReserva(@PathVariable Long reservationId) {
         reservaService.deleteReserva(reservationId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
