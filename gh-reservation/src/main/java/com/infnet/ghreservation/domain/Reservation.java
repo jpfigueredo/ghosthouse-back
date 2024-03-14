@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 @Entity
 @Table(name = "tb_reserva")
-public class Reserva {
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

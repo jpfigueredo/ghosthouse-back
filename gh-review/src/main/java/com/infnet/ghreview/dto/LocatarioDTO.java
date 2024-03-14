@@ -9,5 +9,5 @@ public class LocatarioDTO {
 
     private Long id;
 
-    private List<ImovelDTO> favoritos;
+    private List<PropertyDTO> favoritos;
 }

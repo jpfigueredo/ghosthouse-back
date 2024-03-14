@@ -10,14 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infnet.ghreservation.builder.ReservaBuilder;
-import com.infnet.ghreservation.dto.ReservaDTO;
-import com.infnet.ghreservation.service.ReservaServiceImpl;
+import com.infnet.ghreservation.builder.ReservationBuilder;
+import com.infnet.ghreservation.dto.ReservationDTO;
+import com.infnet.ghreservation.service.ReservationServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,29 +30,29 @@ import java.util.TimeZone;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ReservaControllerTest {
+public class ReservationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ReservaServiceImpl reservaService;
+    private ReservationServiceImpl reservaService;
 
-    private ReservaBuilder reservaBuilder;
+    private ReservationBuilder reservationBuilder;
 
     @Before
     public void setUp() {
-        reservaBuilder = new ReservaBuilder();
+        reservationBuilder = new ReservationBuilder();
     }
 
 
 
     @Test
     public void testCreateReservation() throws Exception {
-        ReservaDTO reservaDTO = reservaBuilder.createReservaDTO();
-        String jsonBody = new ObjectMapper().setTimeZone(TimeZone.getTimeZone("UTC")).writeValueAsString(reservaDTO);
+        ReservationDTO reservationDTO = reservationBuilder.createReservaDTO();
+        String jsonBody = new ObjectMapper().setTimeZone(TimeZone.getTimeZone("UTC")).writeValueAsString(reservationDTO);
 
-        when(reservaService.createReserva(any(ReservaDTO.class))).thenReturn(reservaDTO);
+        when(reservaService.createReserva(any(ReservationDTO.class))).thenReturn(reservationDTO);
 
         MvcResult mvcResult = mockMvc.perform(post("/api/reservations")
                         .content(jsonBody)
@@ -62,34 +60,34 @@ public class ReservaControllerTest {
                 .andDo(print()).andExpect(status().isCreated()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        ReservaDTO userResponseDTO = new ObjectMapper().readValue(contentAsString, ReservaDTO.class);
+        ReservationDTO userResponseDTO = new ObjectMapper().readValue(contentAsString, ReservationDTO.class);
 
-        assertEquals(userResponseDTO, reservaDTO);
+        assertEquals(userResponseDTO, reservationDTO);
     }
 
     @Test
     public void testGetReservaById() throws Exception {
-        ReservaDTO reservaDTO = reservaBuilder.createReservaDTO();
-        Long reservaId = reservaDTO.getId();
+        ReservationDTO reservationDTO = reservationBuilder.createReservaDTO();
+        Long reservaId = reservationDTO.getId();
 
-        when(reservaService.getReservaById(reservaId)).thenReturn(reservaDTO);
+        when(reservaService.getReservaById(reservaId)).thenReturn(reservationDTO);
 
         MvcResult mvcResult = mockMvc.perform(get("/api/reservations/{reservaId}", reservaId))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        ReservaDTO reservaResponseDTO = new ObjectMapper().readValue(contentAsString, ReservaDTO.class);
+        ReservationDTO reservaResponseDTO = new ObjectMapper().readValue(contentAsString, ReservationDTO.class);
 
-        assertEquals(reservaResponseDTO, reservaDTO);
+        assertEquals(reservaResponseDTO, reservationDTO);
     }
 
     @Test
     public void testUpdateReserva() throws Exception {
-        ReservaDTO reservaDTO = reservaBuilder.createReservaDTO();
-        Long reservaId = reservaDTO.getId();
-        String jsonBody = new ObjectMapper().setTimeZone(TimeZone.getTimeZone("UTC")).writeValueAsString(reservaDTO);
+        ReservationDTO reservationDTO = reservationBuilder.createReservaDTO();
+        Long reservaId = reservationDTO.getId();
+        String jsonBody = new ObjectMapper().setTimeZone(TimeZone.getTimeZone("UTC")).writeValueAsString(reservationDTO);
 
-        when(reservaService.updateReserva(eq(reservaId), any(ReservaDTO.class))).thenReturn(reservaDTO);
+        when(reservaService.updateReserva(eq(reservaId), any(ReservationDTO.class))).thenReturn(reservationDTO);
 
         MvcResult mvcResult = mockMvc.perform(put("/api/reservations/{reservaId}", reservaId)
                         .content(jsonBody)
@@ -97,9 +95,9 @@ public class ReservaControllerTest {
                 .andDo(print()).andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        ReservaDTO reservaResponseDTO = new ObjectMapper().readValue(contentAsString, ReservaDTO.class);
+        ReservationDTO reservaResponseDTO = new ObjectMapper().readValue(contentAsString, ReservationDTO.class);
 
-        assertEquals(reservaResponseDTO, reservaDTO);
+        assertEquals(reservaResponseDTO, reservationDTO);
     }
 
     @Test

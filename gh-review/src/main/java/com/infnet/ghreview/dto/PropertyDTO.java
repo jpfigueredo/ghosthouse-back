@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ImovelDTO {
+public class PropertyDTO {
 
     @NotNull(message = "O campo de ID do imovel é obrigatório!")
     private Long id;

@@ -7,7 +7,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class ReservaDTO {
+public class ReservationDTO {
     private Long id;
     @NotBlank
     private String propertyId;

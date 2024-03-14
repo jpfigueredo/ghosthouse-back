@@ -1,7 +1,7 @@
 package com.infnet.ghreview.builder;
 
 import com.infnet.ghreview.domain.Review;
-import com.infnet.ghreview.dto.ImovelDTO;
+import com.infnet.ghreview.dto.PropertyDTO;
 import com.infnet.ghreview.dto.LocatarioDTO;
 import com.infnet.ghreview.dto.ReviewDTO;
 import com.infnet.ghreview.enums.TipoCategoria;
@@ -44,30 +44,30 @@ public class ReviewBuilder {
     }
 
     public Review createReview(){
-        ImovelDTO imovelDTO = createImovelDTO();
+        PropertyDTO propertyDTO = createImovelDTO();
         LocatarioDTO locatarioDTO = createLocatarioDTO();
 
         Review review = new Review();
         review.setId(1L);
         review.setDescricao("testestestestestestestesteste");
-        review.setImovel(imovelDTO);
+        review.setImovel(propertyDTO);
         review.setLocatario(locatarioDTO);
         return review;
     }
 
     public Review createReviewWithId(Long id){
-        ImovelDTO imovelDTO = createImovelDTO();
+        PropertyDTO propertyDTO = createImovelDTO();
 
         Review review = new Review();
         review.setId(id);
         review.setDescricao("testestestestestestestesteste");
-        review.setImovel(imovelDTO);
+        review.setImovel(propertyDTO);
         review.setLocatario(createLocatarioDTO());
         return review;
     }
 
     public List<Review> createReviewList(){
-        ImovelDTO imovelDTO = createImovelDTO();
+        PropertyDTO propertyDTO = createImovelDTO();
         LocatarioDTO locatarioDTO = createLocatarioDTO();
 
         List<Review> listImovel = new ArrayList<>();
@@ -75,24 +75,24 @@ public class ReviewBuilder {
             Review review = new Review();
             review.setId((long) i);
             review.setDescricao("testestestestestestestesteste");
-            review.setImovel(imovelDTO);
+            review.setImovel(propertyDTO);
             review.setLocatario(locatarioDTO);
             listImovel.add(review);
         }
         return listImovel;
     }
 
-    private ImovelDTO createImovelDTO(){
-        ImovelDTO imovelDTO = new ImovelDTO();
-        imovelDTO.setId(1L);
-        imovelDTO.setNome("teste");
-        imovelDTO.setDescricao("testestestestestestestesteste");
-        imovelDTO.setCategoria(TipoCategoria.CASA);
-        imovelDTO.setIdProprietario(1L);
-        imovelDTO.setDatasReservadas(createDateList());
-        imovelDTO.setQuantidadeQuartos(1);
-        imovelDTO.setArea(1);
-        return imovelDTO;
+    private PropertyDTO createImovelDTO(){
+        PropertyDTO propertyDTO = new PropertyDTO();
+        propertyDTO.setId(1L);
+        propertyDTO.setNome("teste");
+        propertyDTO.setDescricao("testestestestestestestesteste");
+        propertyDTO.setCategoria(TipoCategoria.CASA);
+        propertyDTO.setIdProprietario(1L);
+        propertyDTO.setDatasReservadas(createDateList());
+        propertyDTO.setQuantidadeQuartos(1);
+        propertyDTO.setArea(1);
+        return propertyDTO;
     }
 
     private List<Date> createDateList(){
@@ -112,21 +112,21 @@ public class ReviewBuilder {
         return locatario;
     }
 
-    private List<ImovelDTO> createImovelDTOList(){
-        List<ImovelDTO> listImovelDTO = new ArrayList<>();
+    private List<PropertyDTO> createImovelDTOList(){
+        List<PropertyDTO> listPropertyDTO = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            ImovelDTO imovelDTO = new ImovelDTO();
-            imovelDTO.setId((long) i);
-            imovelDTO.setNome("teste");
-            imovelDTO.setDescricao("testestestestestestestesteste");
-            imovelDTO.setCategoria(TipoCategoria.CASA);
-            imovelDTO.setIdProprietario(1L);
-            imovelDTO.setDatasReservadas(createDateList());
-            imovelDTO.setQuantidadeQuartos(1);
-            imovelDTO.setArea(50);
-            listImovelDTO.add(imovelDTO);
+            PropertyDTO propertyDTO = new PropertyDTO();
+            propertyDTO.setId((long) i);
+            propertyDTO.setNome("teste");
+            propertyDTO.setDescricao("testestestestestestestesteste");
+            propertyDTO.setCategoria(TipoCategoria.CASA);
+            propertyDTO.setIdProprietario(1L);
+            propertyDTO.setDatasReservadas(createDateList());
+            propertyDTO.setQuantidadeQuartos(1);
+            propertyDTO.setArea(50);
+            listPropertyDTO.add(propertyDTO);
         }
-        return listImovelDTO;
+        return listPropertyDTO;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.infnet.ghreview.domain;
 
-import com.infnet.ghreview.dto.ImovelDTO;
+import com.infnet.ghreview.dto.PropertyDTO;
 import com.infnet.ghreview.dto.LocatarioDTO;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class Review {
 
     @OneToOne
     @JoinColumn(name = "imovel_id")
-    private ImovelDTO imovel;
+    private PropertyDTO imovel;
 
     @OneToOne
     @JoinColumn(name = "locatario_id")
