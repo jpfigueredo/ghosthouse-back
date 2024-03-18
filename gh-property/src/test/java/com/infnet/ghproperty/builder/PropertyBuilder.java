@@ -1,15 +1,15 @@
 package com.infnet.ghproperty.builder;
 
 import com.infnet.ghproperty.domain.Property;
-import com.infnet.ghproperty.domain.Proprietario;
 import com.infnet.ghproperty.dto.PropertyDTO;
+import com.infnet.ghproperty.dto.ProprietarioDTO;
 import com.infnet.ghproperty.enums.TipoCategoria;
 
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImovelBuilder {
+public class PropertyBuilder {
 
     public PropertyDTO createImovelDTO(){
         PropertyDTO propertyDTO = new PropertyDTO();
@@ -60,7 +60,7 @@ public class ImovelBuilder {
         property.setNome("teste");
         property.setDescricao("testestestestestestestesteste");
         property.setCategoria(TipoCategoria.CASA);
-        property.setProprietario(createProprietario());
+        property.setProprietarioDTO(createProprietarioDTO());
         property.setDatasReservadas(createDateList());
         property.setQuantidadeQuartos(1);
         property.setArea(1);
@@ -75,7 +75,7 @@ public class ImovelBuilder {
             property.setNome("teste");
             property.setDescricao("testestestestestestestesteste");
             property.setCategoria(TipoCategoria.CASA);
-            property.setProprietario(createProprietario());
+            property.setProprietarioDTO(createProprietarioDTO());
             property.setDatasReservadas(createDateList());
             property.setQuantidadeQuartos(1);
             property.setArea(1);
@@ -90,15 +90,15 @@ public class ImovelBuilder {
         property.setNome("teste");
         property.setDescricao("testestestestestestestesteste");
         property.setCategoria(TipoCategoria.CASA);
-        property.setProprietario(createProprietario());
+        property.setProprietarioDTO(createProprietarioDTO());
         property.setDatasReservadas(createDateList());
         property.setQuantidadeQuartos(1);
         property.setArea(1);
         return property;
     }
 
-    private Proprietario createProprietario(){
-        Proprietario proprietario = new Proprietario();
+    private ProprietarioDTO createProprietarioDTO(){
+        ProprietarioDTO proprietario = new ProprietarioDTO();
         proprietario.setId(1L);
         proprietario.setNome("teste");
         proprietario.setEmail("teste@teste.test");

@@ -1,6 +1,6 @@
 package com.infnet.ghproperty.service;
 
-import com.infnet.ghproperty.builder.ImovelBuilder;
+import com.infnet.ghproperty.builder.PropertyBuilder;
 import com.infnet.ghproperty.domain.Property;
 import com.infnet.ghproperty.dto.PropertyDTO;
 import com.infnet.ghproperty.exceptions.ResourceNotFoundException;
@@ -35,7 +35,7 @@ class PropertyServiceImplTest {
     private ModelMapper modelMapper;
 
     @Mock
-    private ImovelBuilder imovelBuilder;
+    private PropertyBuilder propertyBuilder;
 
     @InjectMocks
     private PropertyService propertyService;
@@ -48,8 +48,8 @@ class PropertyServiceImplTest {
     @Test
     @Order(1)
     void createImovel() throws Exception {
-        PropertyDTO propertyDTO = imovelBuilder.createImovelDTO();
-        Property property = imovelBuilder.createImovel();
+        PropertyDTO propertyDTO = propertyBuilder.createImovelDTO();
+        Property property = propertyBuilder.createImovel();
 
         when(modelMapper.map(propertyDTO, Property.class)).thenReturn(property);
         when(propertyRepository.save(any(Property.class))).thenReturn(property);
@@ -65,8 +65,8 @@ class PropertyServiceImplTest {
     @Order(2)
     void getImovelById() throws Exception {
         Long propertyId = 1L;
-        PropertyDTO propertyDTO = imovelBuilder.createImovelDTO();
-        Property property = imovelBuilder.createImovel();
+        PropertyDTO propertyDTO = propertyBuilder.createImovelDTO();
+        Property property = propertyBuilder.createImovel();
 
         when(propertyRepository.findById(propertyId)).thenReturn(Optional.of(property));
         when(modelMapper.map(property, PropertyDTO.class)).thenReturn(propertyDTO);
@@ -90,8 +90,8 @@ class PropertyServiceImplTest {
     @Order(4)
     void updateImovel() throws Exception {
         Long propertyId = 1L;
-        PropertyDTO propertyDTO = imovelBuilder.createImovelDTOWithId(propertyId);
-        Property property = imovelBuilder.createImovelWithId(propertyId);
+        PropertyDTO propertyDTO = propertyBuilder.createImovelDTOWithId(propertyId);
+        Property property = propertyBuilder.createImovelWithId(propertyId);
 
         when(propertyRepository.existsById(propertyId)).thenReturn(true);
         when(propertyRepository.save(any(Property.class))).thenReturn(property);
@@ -107,7 +107,7 @@ class PropertyServiceImplTest {
     @Order(5)
     void updateImovelThrowsException() {
         Long propertyId = 1L;
-        PropertyDTO propertyDTO = imovelBuilder.createImovelDTOWithId(propertyId);
+        PropertyDTO propertyDTO = propertyBuilder.createImovelDTOWithId(propertyId);
 
         when(propertyRepository.existsById(propertyId)).thenReturn(false);
 
@@ -134,15 +134,15 @@ class PropertyServiceImplTest {
     @Test
     @Order(8)
     void getImovelList() throws Exception {
-        List<Property> propertyList = imovelBuilder.createImovelList();
-        List<PropertyDTO> propertyDTOList = imovelBuilder.createImovelDTOList();
+        List<Property> propertyList = propertyBuilder.createImovelList();
+        List<PropertyDTO> propertyDTOList = propertyBuilder.createImovelDTOList();
 
         when(propertyRepository.findAll()).thenReturn(propertyList);
 
         List<PropertyDTO> foundPropertyDTOList = propertyService.getPropertyList();
         assertEquals(propertyDTOList.size(), foundPropertyDTOList.size());
         for (int i = 0; i < propertyList.size(); i++) {
-            assertEquals(propertyDTOList.get(i).getIdProprietario(), propertyList.get(i).getProprietario().getId());
+            assertEquals(propertyDTOList.get(i).getIdProprietario(), propertyList.get(i).getProprietarioDTO().getId());
         }
     }
 }

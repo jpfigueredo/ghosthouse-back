@@ -12,14 +12,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 import java.util.List;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ReviewServiceImplTest {
 
     @Mock
@@ -41,7 +46,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(1)
-    void createReview() throws Exception {
+    public void createReview() throws Exception {
         ReviewDTO reviewDTO = reviewBuilder.createReviewDTO();
         Review review = reviewBuilder.createReview();
 
@@ -57,7 +62,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(2)
-    void getReviewById() throws Exception {
+    public void getReviewById() throws Exception {
         Long reviewById = 1L;
         ReviewDTO reviewDTO = reviewBuilder.createReviewDTO();
         Review review = reviewBuilder.createReview();
@@ -72,7 +77,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(3)
-    void getReviewByIdThrowsException() {
+    public void getReviewByIdThrowsException() {
         Long reviewById = 1L;
         when(reviewRepository.findById(reviewById)).thenReturn(Optional.empty());
         assertThrows(Exception.class, () -> reviewService.getReviewById(reviewById));
@@ -80,7 +85,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(4)
-    void updateReview() throws Exception {
+    public void updateReview() throws Exception {
         Long reviewID = 1L;
         ReviewDTO reviewDTO = reviewBuilder.createReviewDTOWithId(reviewID);
         Review review = reviewBuilder.createReviewWithId(reviewID);
@@ -97,7 +102,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(5)
-    void updateReviewThrowsException() {
+    public void updateReviewThrowsException() {
         Long reviewID = 1L;
         ReviewDTO reviewDTO = reviewBuilder.createReviewDTOWithId(reviewID);
 
@@ -108,7 +113,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(6)
-    void deleteReview() throws Exception {
+    public void deleteReview() throws Exception {
         Long reviewID = 1L;
         when(reviewRepository.existsById(reviewID)).thenReturn(true);
         reviewService.deleteReview(reviewID);
@@ -117,7 +122,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(7)
-    void deleteReviewThrowsException() {
+    public void deleteReviewThrowsException() {
         Long reviewID = 1L;
         when(reviewRepository.existsById(reviewID)).thenReturn(false);
         assertThrows(Exception.class, () -> reviewService.deleteReview(reviewID));
@@ -125,7 +130,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @Order(8)
-    void getReviewList() throws Exception {
+    public void getReviewList() throws Exception {
         List<Review> reviewList = reviewBuilder.createReviewList();
         List<ReviewDTO> reviewDTOList = reviewBuilder.createReviewDTOList();
 
