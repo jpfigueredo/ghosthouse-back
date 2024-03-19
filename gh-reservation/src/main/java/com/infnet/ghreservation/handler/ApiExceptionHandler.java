@@ -1,5 +1,6 @@
 package com.infnet.ghreservation.handler;
 
+import feign.FeignException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -62,15 +63,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
     }
 
-//    @ExceptionHandler(RuntimeException.class)
-//    public ResponseEntity<Object> handleNegocio(RuntimeException ex, WebRequest request) {
-//        HttpStatus status = HttpStatus.BAD_REQUEST;
-//
-//        ApiError apiError = new ApiError();
-//        apiError.setStatus(status.value());
-//        apiError.setDataHora(new Date());
-//        apiError.setTitulo(ex.getMessage());
-//
-//        return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
-//    }
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<Object> handleFeignException(FeignException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        ApiError apiError = new ApiError();
+        apiError.setStatus(ex.status());
+        apiError.setDataHora(new Date());
+        apiError.setTitulo(ex.getMessage());
+
+        return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
+    }
 }

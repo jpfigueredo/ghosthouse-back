@@ -3,7 +3,7 @@ package com.infnet.ghreservation.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -15,13 +15,12 @@ public class Reservation {
     @Column(name ="reserva_id")
     private Long id;
 
-    @OneToOne
-    private String propertyId;
+   // @OneToOne
+    private Long propertyId;
 
+    private Long tenantId;
 
-    private String tenantId;
+    private LocalDate startDate;
 
-    private Date startDate;
-
-    private Date endDate;
+    private LocalDate endDate;
 }

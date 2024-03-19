@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import java.util.Optional;
 
 import com.infnet.ghreservation.builder.ReservationBuilder;
+import com.infnet.ghreservation.client.PropertyClient;
 import com.infnet.ghreservation.domain.Reservation;
 import com.infnet.ghreservation.dto.ReservationDTO;
 import com.infnet.ghreservation.repository.ReservationRepository;
@@ -29,6 +30,8 @@ public class ReservationServiceTest {
     private ReservationRepository reservationRepository;
     @Mock
     private ModelMapper modelMapper;
+    @Mock
+    private PropertyClient propertyClient;
     @InjectMocks
     private ReservationServiceImpl reservaService;
     private ReservationBuilder reservationBuilder;

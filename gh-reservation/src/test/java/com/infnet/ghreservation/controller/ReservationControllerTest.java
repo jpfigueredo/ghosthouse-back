@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.infnet.ghreservation.builder.ReservationBuilder;
 import com.infnet.ghreservation.dto.ReservationDTO;
 import com.infnet.ghreservation.service.ReservationServiceImpl;
@@ -50,17 +51,17 @@ public class ReservationControllerTest {
     @Test
     public void testCreateReservation() throws Exception {
         ReservationDTO reservationDTO = reservationBuilder.createReservaDTO();
-        String jsonBody = new ObjectMapper().setTimeZone(TimeZone.getTimeZone("UTC")).writeValueAsString(reservationDTO);
+        String jsonBody = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(reservationDTO);
 
         when(reservaService.createReserva(any(ReservationDTO.class))).thenReturn(reservationDTO);
 
-        MvcResult mvcResult = mockMvc.perform(post("/api/reservations")
+        MvcResult mvcResult = mockMvc.perform(post("/api/reservas")
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isCreated()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        ReservationDTO userResponseDTO = new ObjectMapper().readValue(contentAsString, ReservationDTO.class);
+        ReservationDTO userResponseDTO = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(contentAsString, ReservationDTO.class);
 
         assertEquals(userResponseDTO, reservationDTO);
     }
@@ -72,11 +73,11 @@ public class ReservationControllerTest {
 
         when(reservaService.getReservaById(reservaId)).thenReturn(reservationDTO);
 
-        MvcResult mvcResult = mockMvc.perform(get("/api/reservations/{reservaId}", reservaId))
+        MvcResult mvcResult = mockMvc.perform(get("/api/reservas/{reservaId}", reservaId))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        ReservationDTO reservaResponseDTO = new ObjectMapper().readValue(contentAsString, ReservationDTO.class);
+        ReservationDTO reservaResponseDTO = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(contentAsString, ReservationDTO.class);
 
         assertEquals(reservaResponseDTO, reservationDTO);
     }
@@ -85,17 +86,17 @@ public class ReservationControllerTest {
     public void testUpdateReserva() throws Exception {
         ReservationDTO reservationDTO = reservationBuilder.createReservaDTO();
         Long reservaId = reservationDTO.getId();
-        String jsonBody = new ObjectMapper().setTimeZone(TimeZone.getTimeZone("UTC")).writeValueAsString(reservationDTO);
+        String jsonBody = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(reservationDTO);
 
         when(reservaService.updateReserva(eq(reservaId), any(ReservationDTO.class))).thenReturn(reservationDTO);
 
-        MvcResult mvcResult = mockMvc.perform(put("/api/reservations/{reservaId}", reservaId)
+        MvcResult mvcResult = mockMvc.perform(put("/api/reservas/{reservaId}", reservaId)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        ReservationDTO reservaResponseDTO = new ObjectMapper().readValue(contentAsString, ReservationDTO.class);
+        ReservationDTO reservaResponseDTO = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(contentAsString, ReservationDTO.class);
 
         assertEquals(reservaResponseDTO, reservationDTO);
     }
@@ -104,7 +105,7 @@ public class ReservationControllerTest {
     public void testDeleteReserva() throws Exception {
         Long reservaId = 1L;
 
-        mockMvc.perform(delete("/api/reservations/{reservaId}", reservaId))
+        mockMvc.perform(delete("/api/reservas/{reservaId}", reservaId))
                 .andExpect(status().isNoContent());
 
         verify(reservaService, times(1)).deleteReserva(reservaId);
