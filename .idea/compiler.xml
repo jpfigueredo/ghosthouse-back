@@ -7,14 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="gh-communication" />
         <module name="gh-payment" />
+        <module name="gh-communication" />
         <module name="gh-property-search" />
-        <module name="gh-imovel" />
         <module name="gh-auth" />
         <module name="gh-reservation" />
         <module name="gh-review" />
-        <module name="ghosthouse-autenticacao" />
+        <module name="gh-property" />
       </profile>
     </annotationProcessing>
   </component>
@@ -22,12 +21,11 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gh-auth" options="-parameters" />
       <module name="gh-communication" options="-parameters" />
-      <module name="gh-imovel" options="-parameters" />
       <module name="gh-payment" options="-parameters" />
+      <module name="gh-property" options="-parameters" />
       <module name="gh-property-search" options="-parameters" />
       <module name="gh-reservation" options="-parameters" />
       <module name="gh-review" options="-parameters" />
-      <module name="ghosthouse-autenticacao" options="-parameters" />
     </option>
   </component>
 </project>

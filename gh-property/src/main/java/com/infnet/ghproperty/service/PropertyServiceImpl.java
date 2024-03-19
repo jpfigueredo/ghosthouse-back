@@ -4,17 +4,20 @@ import com.infnet.ghproperty.dto.PropertyDTO;
 import com.infnet.ghproperty.domain.Property;
 import com.infnet.ghproperty.exceptions.ResourceNotFoundException;
 import com.infnet.ghproperty.repository.PropertyRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class PropertyServiceImpl implements PropertyService {
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     private PropertyRepository propertyRepository;
@@ -27,15 +30,15 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyDTO getPropertyById(Long propertyId) throws Exception {
-        Property review = propertyExistsByID(propertyId);
-        return modelMapper.map(review, PropertyDTO.class);
+    public PropertyDTO getPropertyById(Long propertyId) {
+        Property property = propertyExistsByID(propertyId);
+        return modelMapper.map(property, PropertyDTO.class);
     }
 
     @Override
-    public PropertyDTO updateProperty(Long propertyId, PropertyDTO propertyDTO) throws ResourceNotFoundException {
+    public PropertyDTO updateProperty(Long propertyId, PropertyDTO propertyDTO) {
         if (!propertyRepository.existsById(propertyId)) {
-            throw new ResourceNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
+            throw new EntityNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
         }
         propertyDTO.setId(propertyId);
         Property updatedProperty = propertyRepository.save(modelMapper.map(propertyDTO, Property.class));
@@ -43,9 +46,33 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public void deleteProperty(Long propertyId) throws Exception {
+    public void deleteProperty(Long propertyId) {
         Property property = propertyExistsByID(propertyId);
         propertyRepository.delete(property);
+    }
+
+    @Override
+    public void setDatasReservadas(Long propertyId, List<LocalDate> newDates) {
+        Property property = propertyExistsByID(propertyId);
+        List<LocalDate> reservedDates = property.getDatasReservadas();
+        reservedDates.addAll(newDates);
+        property.setDatasReservadas(reservedDates);
+        propertyRepository.save(property);
+    }
+
+    @Override
+    public List<LocalDate> getDatasReservadas(Long propertyId) {
+        Property property = propertyExistsByID(propertyId);
+        return property.getDatasReservadas();
+    }
+
+    @Override
+    public void removeDatasReservadas(Long propertyId, List<LocalDate> datesToRemove) {
+        Property property = propertyExistsByID(propertyId);
+        List<LocalDate> reservedDates = property.getDatasReservadas();
+        reservedDates.removeAll(datesToRemove);
+        property.setDatasReservadas(reservedDates);
+        propertyRepository.save(property);
     }
 
     @Override
@@ -56,9 +83,9 @@ public class PropertyServiceImpl implements PropertyService {
                 .collect(Collectors.toList());
     }
 
-    private Property propertyExistsByID(Long propertyId) throws Exception {
+    private Property propertyExistsByID(Long propertyId) {
         if (!propertyRepository.existsById(propertyId)) {
-            throw new ResourceNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
+            throw new EntityNotFoundException("Imóvel não encontrado com o ID: " + propertyId);
         }
         return propertyRepository.findById(propertyId).get();
     }

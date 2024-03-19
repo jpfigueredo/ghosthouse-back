@@ -4,6 +4,8 @@ import com.infnet.ghproperty.dto.ProprietarioDTO;
 import com.infnet.ghproperty.enums.TipoCategoria;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +28,14 @@ public class Property {
 
     private Integer area;
 
-    private List<Date> datasReservadas;
+    @ElementCollection
+    private List<LocalDate> datasReservadas;
 
-    @OneToOne
-    @JoinColumn(name = "proprietario_id")
-    private ProprietarioDTO proprietarioDTO;
+    private Long proprietarioId;
 
     private TipoCategoria categoria;
+
+    private String endereco;
+
+    private Double valorDiaria;
 }

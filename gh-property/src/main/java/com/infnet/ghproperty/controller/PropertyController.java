@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/properties")
 public class PropertyController {
@@ -18,28 +22,39 @@ public class PropertyController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity createProperty(@RequestBody @Valid PropertyDTO propertyDTO)  throws Exception{
+    public ResponseEntity<PropertyDTO> createProperty(@RequestBody @Valid PropertyDTO propertyDTO) {
         return new ResponseEntity<>(propertyService.createProperty(propertyDTO), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity getProperties()  throws Exception{
-        return new ResponseEntity(propertyService.getPropertyList(), HttpStatus.OK);
+    public ResponseEntity<List<PropertyDTO>> getProperties() {
+        return new ResponseEntity<>(propertyService.getPropertyList(), HttpStatus.OK);
     }
 
     @GetMapping("/{propertyId}")
-    public ResponseEntity<PropertyDTO> getPropertyById(@RequestParam Long propertyId)  throws Exception{
+    public ResponseEntity<PropertyDTO> getPropertyById(@PathVariable Long propertyId) {
         return new ResponseEntity<>(propertyService.getPropertyById(propertyId), HttpStatus.OK);
     }
 
     @PutMapping("/{propertyId}")
-    public ResponseEntity<PropertyDTO> updateProperty(@RequestParam Long propertyId, @RequestBody PropertyDTO propertyDto)  throws Exception{
+    public ResponseEntity<PropertyDTO> updateProperty(@PathVariable Long propertyId, @RequestBody PropertyDTO propertyDto) {
         PropertyDTO updatedProperty = propertyService.updateProperty(propertyId, propertyDto);
         return new ResponseEntity<>(updatedProperty, HttpStatus.OK);
     }
 
     @DeleteMapping("/{propertyId}")
-    public void deleteProperty(@RequestParam Long propertyId) throws Exception {
+    public void deleteProperty(@PathVariable Long propertyId) {
         propertyService.deleteProperty(propertyId);
+    }
+
+    @PutMapping("/dates/{propertyId}")
+    public ResponseEntity<Void> updatePropertyDates(@PathVariable Long propertyId, @RequestBody List<LocalDate> newDates) {
+        propertyService.setDatasReservadas(propertyId, newDates);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/dates/{propertyId}")
+    public ResponseEntity<List<LocalDate>> getPropertyDates(@PathVariable Long propertyId) {
+        return new ResponseEntity<>(propertyService.getDatasReservadas(propertyId), HttpStatus.OK);
     }
 }

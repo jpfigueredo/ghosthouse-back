@@ -5,6 +5,7 @@ import com.infnet.ghproperty.dto.PropertyDTO;
 import com.infnet.ghproperty.dto.ProprietarioDTO;
 import com.infnet.ghproperty.enums.TipoCategoria;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class PropertyBuilder {
         propertyDTO.setDatasReservadas(createDateList());
         propertyDTO.setQuantidadeQuartos(1);
         propertyDTO.setArea(1);
+        propertyDTO.setEndereco("Al. Teste, 123");
+        propertyDTO.setValorDiaria(200.0);
         return propertyDTO;
     }
 
@@ -34,6 +37,8 @@ public class PropertyBuilder {
         propertyDTO.setDatasReservadas(createDateList());
         propertyDTO.setQuantidadeQuartos(1);
         propertyDTO.setArea(1);
+        propertyDTO.setEndereco("Al. Teste, 123");
+        propertyDTO.setValorDiaria(200.0);
         return propertyDTO;
     }
 
@@ -49,6 +54,8 @@ public class PropertyBuilder {
             propertyDTO.setDatasReservadas(createDateList());
             propertyDTO.setQuantidadeQuartos(1);
             propertyDTO.setArea(50);
+            propertyDTO.setEndereco("Al. Teste, 123");
+            propertyDTO.setValorDiaria(200.0);
             listPropertyDTO.add(propertyDTO);
         }
         return listPropertyDTO;
@@ -60,10 +67,12 @@ public class PropertyBuilder {
         property.setNome("teste");
         property.setDescricao("testestestestestestestesteste");
         property.setCategoria(TipoCategoria.CASA);
-        property.setProprietarioDTO(createProprietarioDTO());
+        property.setProprietarioId(1L);
         property.setDatasReservadas(createDateList());
         property.setQuantidadeQuartos(1);
         property.setArea(1);
+        property.setEndereco("Al. Teste, 123");
+        property.setValorDiaria(200.0);
         return property;
     }
 
@@ -75,10 +84,12 @@ public class PropertyBuilder {
             property.setNome("teste");
             property.setDescricao("testestestestestestestesteste");
             property.setCategoria(TipoCategoria.CASA);
-            property.setProprietarioDTO(createProprietarioDTO());
+            property.setProprietarioId(1L);
             property.setDatasReservadas(createDateList());
             property.setQuantidadeQuartos(1);
             property.setArea(1);
+            property.setEndereco("Al. Teste, 123");
+            property.setValorDiaria(200.0);
             listProperty.add(property);
         }
         return listProperty;
@@ -90,28 +101,20 @@ public class PropertyBuilder {
         property.setNome("teste");
         property.setDescricao("testestestestestestestesteste");
         property.setCategoria(TipoCategoria.CASA);
-        property.setProprietarioDTO(createProprietarioDTO());
+        property.setProprietarioId(1L);
         property.setDatasReservadas(createDateList());
         property.setQuantidadeQuartos(1);
         property.setArea(1);
+        property.setEndereco("Al. Teste, 123");
+        property.setValorDiaria(200.0);
         return property;
     }
 
-    private ProprietarioDTO createProprietarioDTO(){
-        ProprietarioDTO proprietario = new ProprietarioDTO();
-        proprietario.setId(1L);
-        proprietario.setNome("teste");
-        proprietario.setEmail("teste@teste.test");
-        proprietario.setSenha("etset");
-        proprietario.setTelefone("+55 12345-6789");
-        return proprietario;
-    }
 
-    private List<Date> createDateList(){
-        List<Date> dateList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Date date = new Date();
-            date.setTime(i);
+    private List<LocalDate> createDateList(){
+        List<LocalDate> dateList = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            LocalDate date = LocalDate.of(2024, 3, i);
             dateList.add(date);
         }
         return dateList;
