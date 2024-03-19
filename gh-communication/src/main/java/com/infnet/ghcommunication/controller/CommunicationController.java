@@ -1,44 +1,34 @@
 package com.infnet.ghcommunication.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.infnet.ghcommunication.dto.CommunicationDTO;
+import com.infnet.ghcommunication.service.CommunicationServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/communication")
+@RequestMapping("/api/communications")
 public class CommunicationController {
 
-//    private final ProprietarioService proprietarioService;
-//    private final LocatarioService locatarioService;
-//    private final UsuarioService usuarioService;
+    @Autowired
+    private CommunicationServiceImpl communicationService;
 
-//    public CommunicationController(ProprietarioService proprietarioService, LocatarioService locatarioService, UsuarioService usuarioService) {
-//        this.proprietarioService = proprietarioService;
-//        this.locatarioService = locatarioService;
-//        this.usuarioService = usuarioService;
-//    }
+    @PostMapping("/send")
+    public ResponseEntity<CommunicationDTO> sendMessage(@RequestBody CommunicationDTO messageDto) {
+        CommunicationDTO sentMessage = communicationService.sendMessage(messageDto);
+        return new ResponseEntity<>(sentMessage, HttpStatus.CREATED);
+    }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<LoginDto> login(@RequestBody @Valid LoginDto loginDto) {
-//        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.autenticar(loginDto));
-//    }
+    @GetMapping("/{messageId}")
+    public ResponseEntity<CommunicationDTO> getMessageById(@PathVariable Long messageId) throws Exception {
+        CommunicationDTO messageDto = communicationService.getMessageById(messageId);
+        return new ResponseEntity<>(messageDto, HttpStatus.OK);
+    }
 
-//    @PostMapping("/proprietario")
-//    public ResponseEntity<Proprietario> createProprietario(@RequestBody @Valid UsuarioRecordDto usuarioRecordDto) {
-//        Proprietario proprietario = new Proprietario();
-//        BeanUtils.copyProperties(usuarioRecordDto, proprietario);
-//
-//        try {
-//            return ResponseEntity.status(HttpStatus.CREATED).body(proprietarioService.save(proprietario));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-//    @PostMapping("/locatario")
-//    public ResponseEntity<Locatario> createLocatario(@RequestBody @Valid UsuarioRecordDto usuarioRecordDto) {
-//        Locatario locatario = new Locatario();
-//        BeanUtils.copyProperties(usuarioRecordDto, locatario);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(locatarioService.save(locatario));
-//    }
+    @DeleteMapping("/{messageId}")
+    public ResponseEntity<Void> deleteMessage(@PathVariable Long messageId) throws Exception {
+        communicationService.deleteMessage(messageId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -1,30 +1,16 @@
 package com.infnet.ghauth.service;
 
-import com.infnet.ghosthouseautenticacao.domain.Usuario;
-import com.infnet.ghosthouseautenticacao.dto.LoginDto;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Service;
+import com.infnet.ghauth.dto.LoginDTO;
+import com.infnet.ghauth.dto.UserDTO;
+import com.infnet.ghauth.exceptions.ResourceNotFoundException;
 
-@Service
-public class UsuarioService {
-    private final ProprietarioService proprietarioService;
-    private final LocatarioService locatarioService;
+public interface UsuarioService {
+    public UserDTO saveUser(UserDTO userDto);
 
-    public UsuarioService(ProprietarioService proprietarioService, LocatarioService locatarioService) {
-        this.proprietarioService = proprietarioService;
-        this.locatarioService = locatarioService;
-    }
+    public UserDTO getUserById(Long userId);
 
-    public LoginDto autenticar(LoginDto login) {
-        Usuario user = proprietarioService.findProprietarioByEmail(login.email());
-        if (user==null) {
-            user = locatarioService.findLocatarioByEmail(login.email());
-        }
+    public UserDTO updateUser(Long userId, UserDTO userDto);
 
-        if (user != null && user.getSenha().equals(login.senha())) {
-            return login;
-        } else {
-            throw new EntityNotFoundException("Usuário não existente.");
-        }
-    }
+    public void deleteUser(Long userId);
+    public UserDTO autenticar(LoginDTO login);
 }

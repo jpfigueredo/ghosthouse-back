@@ -1,6 +1,6 @@
 package com.infnet.ghauth.repository;
 
-import com.infnet.ghosthouseautenticacao.domain.Locatario;
+import com.infnet.ghauth.domain.Locatario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
