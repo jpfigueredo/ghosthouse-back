@@ -38,4 +38,6 @@ public class Property {
     private String endereco;
 
     private Double valorDiaria;
+
+    private String imageUrl;
 }

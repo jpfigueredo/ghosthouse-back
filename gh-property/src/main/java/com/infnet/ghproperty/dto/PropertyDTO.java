@@ -44,4 +44,6 @@ public class PropertyDTO {
 
     @NotNull(message = "O campo de valor da diaria do imovel é obrigatorio!")
     private Double valorDiaria;
+
+    private String imageUrl;
 }
