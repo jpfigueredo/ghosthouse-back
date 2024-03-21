@@ -26,6 +26,11 @@ public class ReservationController {
         return new ResponseEntity(reservationService.getReservaList(), HttpStatus.OK);
     }
 
+    @GetMapping("/tenant/{tenantId}")
+    public ResponseEntity<ReservationDTO> getReservaListByTenantId(@PathVariable Long tenantId) {
+        return new ResponseEntity(reservationService.getReservasByTenantId(tenantId), HttpStatus.OK);
+    }
+
     @GetMapping("/{reservaId}")
     public ResponseEntity<ReservationDTO> getReservaById(@PathVariable Long reservaId) {
         ReservationDTO reservationDto = reservationService.getReservaById(reservaId);

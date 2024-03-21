@@ -49,6 +49,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public List<ReservationDTO> getReservasByTenantId(Long tenantId) {
+        List<Reservation> reservationList = reservationRepository.getReservationByTenantId(tenantId);
+        return reservationList.stream()
+                .map(reservation -> modelMapper.map(reservation, ReservationDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public ReservationDTO getReservaById(Long reservaId) {
         Reservation reservation = existsReservaByID(reservaId);
         return modelMapper.map(reservation, ReservationDTO.class);
