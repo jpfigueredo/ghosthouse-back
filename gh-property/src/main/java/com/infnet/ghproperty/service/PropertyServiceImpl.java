@@ -76,6 +76,14 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public List<PropertyDTO> getPropertyByProprietarioId(Long proprietarioId) {
+        List<Property> propertyList = propertyRepository.getPropertyByProprietarioId(proprietarioId);
+        return propertyList.stream()
+                .map(property -> modelMapper.map(property, PropertyDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<PropertyDTO> getPropertyList() {
         List<Property> propertyList = propertyRepository.findAll();
         return propertyList.stream()

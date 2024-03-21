@@ -3,6 +3,7 @@ package com.infnet.ghreservation.service;
 import com.infnet.ghreservation.client.PropertyClient;
 import com.infnet.ghreservation.domain.Reservation;
 import com.infnet.ghreservation.dto.ReservationDTO;
+import com.infnet.ghreservation.enums.ReservationStatus;
 import com.infnet.ghreservation.repository.ReservationRepository;
 import feign.FeignException;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ReservationDTO createReserva(ReservationDTO reservationDTO) {
         Reservation reservation = modelMapper.map(reservationDTO, Reservation.class);
+        reservation.setStatus(ReservationStatus.ATIVA);
 
         List<LocalDate> reservedDates = generateDatesInRange(reservation.getStartDate(), reservation.getEndDate());
         setReserveddates(reservation.getPropertyId(), reservedDates);
@@ -57,6 +59,29 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public List<ReservationDTO> getReservasByPropertyId(Long propertyId) {
+        List<Reservation> reservationList = reservationRepository.getReservationByPropertyId(propertyId);
+        return reservationList.stream()
+                .map(reservation -> modelMapper.map(reservation, ReservationDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStatusOfExpiredReservations() {
+        List<Reservation> activeReservations = reservationRepository.getReservationByStatus(ReservationStatus.ATIVA);
+
+        List<Reservation> expiredReservations = activeReservations.stream()
+                .filter(reservation -> reservation.getEndDate().isBefore(LocalDate.now()))
+                .toList();
+
+        expiredReservations.forEach(reservation -> {
+            reservation.setStatus(ReservationStatus.FINALIZADA);
+        });
+
+        reservationRepository.saveAll(expiredReservations);
+    }
+
+    @Override
     public ReservationDTO getReservaById(Long reservaId) {
         Reservation reservation = existsReservaByID(reservaId);
         return modelMapper.map(reservation, ReservationDTO.class);
@@ -73,7 +98,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void deleteReserva(Long reservaId) {
         Reservation reservation = existsReservaByID(reservaId);
-        reservationRepository.delete(reservation);
+        reservation.setStatus(ReservationStatus.CANCELADA);
+        Reservation updatedReservation = reservationRepository.save(reservation);
+        //return modelMapper.map(updatedReservation, ReservationDTO.class);
     }
 
     private Reservation existsReservaByID(Long reservaId) {

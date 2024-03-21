@@ -30,6 +30,10 @@ public class ReservationController {
     public ResponseEntity<ReservationDTO> getReservaListByTenantId(@PathVariable Long tenantId) {
         return new ResponseEntity(reservationService.getReservasByTenantId(tenantId), HttpStatus.OK);
     }
+    @GetMapping("/property/{propertyId}")
+    public ResponseEntity<ReservationDTO> getReservaListByPropertyId(@PathVariable Long propertyId) {
+        return new ResponseEntity(reservationService.getReservasByPropertyId(propertyId), HttpStatus.OK);
+    }
 
     @GetMapping("/{reservaId}")
     public ResponseEntity<ReservationDTO> getReservaById(@PathVariable Long reservaId) {
@@ -46,6 +50,12 @@ public class ReservationController {
     @DeleteMapping("/{reservaId}")
     public ResponseEntity<Void> deleteReserva(@PathVariable Long reservaId) {
         reservationService.deleteReserva(reservaId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/check-expired")
+    public ResponseEntity<Void> checkExpiredReservations() {
+        reservationService.updateStatusOfExpiredReservations();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

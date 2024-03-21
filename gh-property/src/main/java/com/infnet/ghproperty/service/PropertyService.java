@@ -16,4 +16,5 @@ public interface PropertyService {
     void setDatasReservadas(Long propertyId, List<LocalDate> newDates);
     List<LocalDate> getDatasReservadas(Long propertyId);
     void removeDatasReservadas(Long propertyId, List<LocalDate> datesToRemove);
+    List<PropertyDTO> getPropertyByProprietarioId(Long proprietarioId);
 }

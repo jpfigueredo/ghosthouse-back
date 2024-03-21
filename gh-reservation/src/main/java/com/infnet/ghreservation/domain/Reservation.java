@@ -1,5 +1,6 @@
 package com.infnet.ghreservation.domain;
 
+import com.infnet.ghreservation.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,6 @@ public class Reservation {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    private ReservationStatus status;
 }

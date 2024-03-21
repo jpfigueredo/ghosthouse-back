@@ -57,4 +57,9 @@ public class PropertyController {
     public ResponseEntity<List<LocalDate>> getPropertyDates(@PathVariable Long propertyId) {
         return new ResponseEntity<>(propertyService.getDatasReservadas(propertyId), HttpStatus.OK);
     }
+
+    @GetMapping("/proprietario/{proprietarioId}")
+    public ResponseEntity<List<PropertyDTO>> getPropertiesByProprietario(@PathVariable Long proprietarioId) {
+        return new ResponseEntity<>(propertyService.getPropertyByProprietarioId(proprietarioId), HttpStatus.OK);
+    }
 }

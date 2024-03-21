@@ -11,4 +11,6 @@ public interface ReservationService {
     void deleteReserva(Long reservaId);
     List<ReservationDTO> getReservaList();
     List<ReservationDTO> getReservasByTenantId(Long tenantId);
+    List<ReservationDTO> getReservasByPropertyId(Long propertyId);
+    void updateStatusOfExpiredReservations();
 }

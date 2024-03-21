@@ -1,6 +1,7 @@
 package com.infnet.ghreservation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.infnet.ghreservation.enums.ReservationStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -18,4 +19,5 @@ public class ReservationDTO {
     private LocalDate startDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+    private ReservationStatus status;
 }
