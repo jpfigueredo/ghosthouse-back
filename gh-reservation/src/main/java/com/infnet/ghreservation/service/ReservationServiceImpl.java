@@ -98,9 +98,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void deleteReserva(Long reservaId) {
         Reservation reservation = existsReservaByID(reservaId);
+        handleDeleteDates(reservation);
+        checkSLA(reservation);
         reservation.setStatus(ReservationStatus.CANCELADA);
-        Reservation updatedReservation = reservationRepository.save(reservation);
-        //return modelMapper.map(updatedReservation, ReservationDTO.class);
+        reservationRepository.save(reservation);
     }
 
     private Reservation existsReservaByID(Long reservaId) {
@@ -108,6 +109,17 @@ public class ReservationServiceImpl implements ReservationService {
             throw new EntityNotFoundException("Reserva não encontrado com o ID: " + reservaId);
         }
         return reservationRepository.findById(reservaId).get();
+    }
+
+    private void handleDeleteDates(Reservation reservation) {
+        List<LocalDate> dates = generateDatesInRange(reservation.getStartDate(), reservation.getEndDate());
+        removePropertyDates(reservation.getPropertyId(), dates);
+    }
+
+    private void checkSLA(Reservation reservation) {
+        if(!reservation.getStartDate().isAfter(LocalDate.now().plusDays(7))) {
+           throw new IllegalArgumentException("A reserva não pode ser cancelada menos de 7 dias antes da data de início.");
+        }
     }
 
     private List<LocalDate> generateDatesInRange(LocalDate startDate, LocalDate endDate) {
@@ -118,6 +130,9 @@ public class ReservationServiceImpl implements ReservationService {
             date = date.plusDays(1);
         }
         return datesInRange;
+    }
+    private void removePropertyDates(Long propertyId, List<LocalDate> dates) {
+       propertyClient.removePropertyDates(propertyId, dates);
     }
 
     private void setReserveddates(Long propertyId, List<LocalDate> newDates) {

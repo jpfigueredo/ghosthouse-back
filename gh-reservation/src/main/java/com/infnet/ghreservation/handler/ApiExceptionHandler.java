@@ -63,6 +63,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        ApiError apiError = new ApiError();
+        apiError.setStatus(status.value());
+        apiError.setDataHora(new Date());
+        apiError.setTitulo(ex.getMessage());
+
+        return handleExceptionInternal(ex, apiError, new HttpHeaders(), status, request);
+    }
+
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<Object> handleFeignException(FeignException ex, WebRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;

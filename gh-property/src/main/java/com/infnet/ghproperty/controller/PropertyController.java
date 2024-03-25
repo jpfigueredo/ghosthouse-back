@@ -58,6 +58,12 @@ public class PropertyController {
         return new ResponseEntity<>(propertyService.getDatasReservadas(propertyId), HttpStatus.OK);
     }
 
+    @DeleteMapping("/dates/{propertyId}")
+    public ResponseEntity<Void> removePropertyDates(@PathVariable Long propertyId, @RequestBody List<LocalDate> dates) {
+        propertyService.removeDatasReservadas(propertyId, dates);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/proprietario/{proprietarioId}")
     public ResponseEntity<List<PropertyDTO>> getPropertiesByProprietario(@PathVariable Long proprietarioId) {
         return new ResponseEntity<>(propertyService.getPropertyByProprietarioId(proprietarioId), HttpStatus.OK);
