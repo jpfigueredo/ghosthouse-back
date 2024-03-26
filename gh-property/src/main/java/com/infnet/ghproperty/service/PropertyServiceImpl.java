@@ -1,5 +1,6 @@
 package com.infnet.ghproperty.service;
 
+import com.infnet.ghproperty.client.ReservaClient;
 import com.infnet.ghproperty.dto.PropertyDTO;
 import com.infnet.ghproperty.domain.Property;
 import com.infnet.ghproperty.exceptions.ResourceNotFoundException;
@@ -21,6 +22,9 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Autowired
     private PropertyRepository propertyRepository;
+
+    @Autowired
+    private ReservaClient reservaClient;
 
     @Override
     public PropertyDTO createProperty(PropertyDTO propertyDTO) {
@@ -48,6 +52,9 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void deleteProperty(Long propertyId) {
         Property property = propertyExistsByID(propertyId);
+        if(!reservaClient.getReservaListByPropertyId(propertyId).getBody().isEmpty()) {
+            throw new IllegalArgumentException("Não é possível deletar imóveis que possuem reservas.");
+        }
         propertyRepository.delete(property);
     }
 
