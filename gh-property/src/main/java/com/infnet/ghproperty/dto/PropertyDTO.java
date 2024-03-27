@@ -3,6 +3,7 @@ package com.infnet.ghproperty.dto;
 import com.infnet.ghproperty.enums.TipoCategoria;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -15,10 +16,10 @@ public class PropertyDTO {
 
     private Long id;
 
-    @NotNull(message = "O campo de nome do imovel é obrigatorio!")
+    @NotBlank(message = "O campo de nome do imovel é obrigatorio!")
     private String nome;
 
-    @NotNull(message = "O campo de descricao do imovel é obrigatorio!")
+    @NotBlank(message = "O campo de descricao do imovel é obrigatorio!")
     private String descricao;
 
     @NotNull(message = "O campo de quantidade de quartos do imovel é obrigatorio!")
@@ -39,7 +40,7 @@ public class PropertyDTO {
     @NotNull(message = "O campo de categoria do imovel é obrigatorio!")
     private TipoCategoria categoria;
 
-    @NotNull(message = "O campo de endereco do imovel é obrigatorio!")
+    @NotBlank(message = "O campo de endereco do imovel é obrigatorio!")
     private String endereco;
 
     @NotNull(message = "O campo de valor da diaria do imovel é obrigatorio!")
